@@ -1,7 +1,7 @@
 # Installation
 
 ```
-npm i ImageMaxSize
+npm i imagemaxsize
 ```
 
 # usage
@@ -9,8 +9,7 @@ npm i ImageMaxSize
 ```js
 const resizer = require("imagemaxsize");
 
-var options = {
-  // The default values. Note: everything in this options is OPTIONAL
+var options = {// The default values. Note: everything in this options is OPTIONAL
   resizeType: "exact", // exact, fast
   mode: "auto", // maximize, minimize, auto
   devideValue: 1.05,

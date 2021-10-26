@@ -1,6 +1,6 @@
 {
   "name": "imagemaxsize",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "This calculates the maximum possible image size without changing the ratio",
   "main": "index.js",
   "scripts": {
