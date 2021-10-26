@@ -1,9 +1,13 @@
 var defaultOptions = {
     resizeType: 'exact', // exact, fast
-    mode: 'auto', // maximize, minimize,
+    mode: 'auto', // maximize, minimize, auto
     devideValue: 1.05,
     subtractValue: 1,
-    stepTimeout: 100000000
+    stepTimeout: 100000000,// to prevent infinite loops
+    logging: 'off',// verbose, off, minimal
+    logger: (message) => {
+        console.log('[DEBUG]:', message)
+    }
 }
 
 /**
@@ -30,13 +34,17 @@ function resize(width, height, maxWidth, maxHeight, options = defaultOptions) {
         timeTook: Date.now() - startTime,
         steps: steps
     }
-
+    ///*
     if (!options.resizeType) options.resizeType = defaultOptions.resizeType
     if (!options.mode) options.mode = defaultOptions.mode
     if (!options.devideValue) options.devideValue = defaultOptions.devideValue
     if (!options.subtractValue) options.subtractValue = defaultOptions.subtractValue
     if (!options.stepTimeout) options.stepTimeout = defaultOptions.stepTimeout
-
+    if (!options.logging) options.logging = defaultOptions.logging
+    if (!options.logger) options.logger = defaultOptions.logger
+    //*/
+    if (options.logging == 'minimal' || options.logging == 'verbose') options.logger(`Options:`)
+    if (options.logging == 'minimal' || options.logging == 'verbose') options.logger(options)
     var mode
     var nWidth, nHeight;
     if (options.mode == 'auto') {
@@ -51,7 +59,7 @@ function resize(width, height, maxWidth, maxHeight, options = defaultOptions) {
     else {
         mode = options.mode
     }
-    console.log(mode)
+    if (options.logging == 'minimal' || options.logging == 'verbose') options.logger(`Resize mode is: ${mode}`)
 
 
     var looping = true
@@ -68,6 +76,7 @@ function resize(width, height, maxWidth, maxHeight, options = defaultOptions) {
         var out = sizeStep(width, height, options, mode)
         nWidth = out.width
         nHeight = out.height
+        if (options.logging == 'verbose') options.logger(`Resizing to ${nWidth}x${nHeight} (${mode})`)
 
 
         var imOut = sizeStep(nWidth, nHeight, options, mode)
